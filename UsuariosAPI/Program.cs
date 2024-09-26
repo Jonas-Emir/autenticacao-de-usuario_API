@@ -1,6 +1,28 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using UsuariosAPI.Data;
+using UsuariosAPI.Models;
+using UsuariosAPI.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+string connString = builder.Configuration.GetConnectionString("DataBaseConnection");
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<CadastroService>();
+
+builder.Services.AddDbContext<UsuarioDbContext>
+      (opts =>
+      {
+          opts.UseSqlServer(connString);
+      });
+
+builder.Services.AddIdentity<UsuarioModel, IdentityRole>()
+    .AddEntityFrameworkStores<UsuarioDbContext>()
+    .AddDefaultTokenProviders();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
