@@ -12,7 +12,8 @@ string connString = builder.Configuration.GetConnectionString("DataBaseConnectio
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<CadastroService>();
+builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<TokenService>();
 
 builder.Services.AddDbContext<UsuarioDbContext>
       (opts =>
